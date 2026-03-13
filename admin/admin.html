@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | JL Studio</title>
+  <meta name="description" content="Panel de administración de la galería de JL Studio.">
+
+  <link rel="stylesheet" href="admin.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+</head>
+
+<body>
+  <div class="admin-page">
+
+    <header class="admin-topbar">
+      <div class="admin-topbar__inner">
+
+        <!-- LOGO -->
+        <a class="admin-brand" href="../index.html" aria-label="Volver a la galería">
+          <img
+            src="../images/marcaaguamejorada.png"
+            alt="JL Studio"
+            class="admin-brand__logo"
+          >
+        </a>
+
+        <div class="admin-topbar__actions">
+
+          <!-- VOLVER A LA WEB -->
+          <a class="admin-link" href="../index.html">Ver web</a>
+
+          <button id="logoutBtn" class="ghost-btn" type="button" hidden>
+            Cerrar sesión
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-container">
+
+      <section id="authCard" class="card auth-card">
+        <div class="section-heading">
+          <h1>Acceso administrador</h1>
+          <p>Entra con tu usuario de Supabase para gestionar la galería.</p>
+        </div>
+
+        <form id="loginForm" class="admin-form">
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="tuemail@correo.com"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="••••••••"
+              required
+            >
+          </div>
+
+          <button class="primary-btn" type="submit">Entrar</button>
+        </form>
+
+        <p id="authMessage" class="message" aria-live="polite"></p>
+      </section>
+
+      <section id="adminPanel" class="admin-grid" hidden>
+
+        <section class="card">
+          <div class="section-heading">
+            <h2>Subir nuevas imágenes</h2>
+            <p>
+              Selecciona una o varias imágenes. El sistema generará una miniatura
+              automática para la galería y conservará una versión grande para el lightbox.
+            </p>
+          </div>
+
+          <form id="uploadForm" class="admin-form">
+            <div class="form-group">
+              <label for="imageFile">Archivos</label>
+              <input
+                id="imageFile"
+                name="imageFile"
+                type="file"
+                accept="image/*"
+                multiple
+                required
+              >
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="titulo">Título base</label>
+                <input
+                  id="titulo"
+                  name="titulo"
+                  type="text"
+                  placeholder="Opcional"
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="orden">Orden inicial</label>
+                <input
+                  id="orden"
+                  name="orden"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value="0"
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="alt">Texto alt base</label>
+              <input
+                id="alt"
+                name="alt"
+                type="text"
+                placeholder="Descripción base"
+              >
+            </div>
+
+            <label class="checkbox-row">
+              <input id="visible" name="visible" type="checkbox" checked>
+              <span>Visible en la galería pública</span>
+            </label>
+
+            <button class="primary-btn" type="submit">Subir imágenes</button>
+          </form>
+
+          <p id="uploadMessage" class="message" aria-live="polite"></p>
+        </section>
+
+        <section class="card">
+          <div class="section-heading">
+            <h2>Imágenes de la galería</h2>
+            <p>
+              Arrastra desde la miniatura para reordenar. También puedes editar título,
+              alt, visibilidad o borrar imágenes.
+            </p>
+          </div>
+
+          <div id="imagesList" class="images-list"></div>
+        </section>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- LIBRERÍAS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+  <!-- SCRIPT ADMIN -->
+  <script src="admin.js"></script>
+
+</body>
+</html>

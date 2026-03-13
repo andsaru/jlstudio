@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto | JL Studio</title>
+  <meta
+    name="description"
+    content="Contacta con JL Studio para encargos de pintura de miniaturas, figuras y proyectos personalizados."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="side-banner side-banner-left" aria-hidden="true"></div>
+  <div class="side-banner side-banner-right" aria-hidden="true"></div>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" href="index.html" aria-label="Volver a inicio">
+          <img src="images/marcaaguamejorada.png" alt="JL Studio" class="brand__logo" />
+        </a>
+
+        <nav class="nav" aria-label="Navegación">
+          <a class="nav__link" href="index.html">Galería</a>
+          <a class="nav__link" href="contacto.html" aria-current="page">Contacto</a>
+          <a
+            class="nav__icon"
+            href="https://www.instagram.com/jesus.luquelopez.9/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <img src="images/instagram-icon.png" alt="Instagram" />
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="contact-hero">
+        <p class="contact-hero__eyebrow">JL Studio</p>
+        <h1 class="page-title">Contacto</h1>
+        <p class="page-subtitle">
+          Si quieres pedir un encargo, resolver dudas o consultar disponibilidad,
+          puedes escribirme a través de este formulario.
+        </p>
+      </section>
+
+      <section class="contact-layout" aria-label="Información de contacto">
+        <article class="contact-card contact-card--info">
+          <h2 class="contact-card__title">Encargos personalizados</h2>
+          <p class="contact-card__text">
+            Trabajo pintura de miniaturas, figuras y proyectos personalizados con
+            especial atención al acabado, limpieza y presentación final.
+          </p>
+
+          <div class="contact-list">
+            <div class="contact-list__item">
+              <h3>Qué puedes consultar</h3>
+              <p>Presupuesto, disponibilidad, tipo de figura, nivel de detalle y plazos.</p>
+            </div>
+
+            <div class="contact-list__item">
+              <h3>Encargos recomendados</h3>
+              <p>Miniaturas individuales, héroes, bustos, escuadras y piezas especiales.</p>
+            </div>
+
+            <div class="contact-list__item">
+              <h3>Respuesta</h3>
+              <p>Cuanto más detalle incluyas, mejor podré orientarte desde el primer mensaje.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="contact-card contact-card--form">
+          <h2 class="contact-card__title">Escríbeme</h2>
+
+          <form
+            class="contact-form"
+            action="https://formsubmit.co/ajax/jlstudiomlg@gmail.com"
+            method="POST"
+            id="contactForm"
+          >
+            <div class="contact-form__group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+            </div>
+
+            <div class="contact-form__group">
+              <label for="email">Correo electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="tuemail@correo.com"
+                required
+              />
+            </div>
+
+            <div class="contact-form__group">
+              <label for="mensaje">Mensaje</label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="6"
+                placeholder="Cuéntame qué miniatura o proyecto tienes en mente..."
+                required
+              ></textarea>
+            </div>
+
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde JL Studio">
+            <input type="hidden" name="_template" value="table">
+
+            <button type="submit" class="contact-form__button" id="contactSubmit">
+              Enviar consulta
+            </button>
+
+            <p
+              id="formStatus"
+              class="contact-form__status"
+              aria-live="polite"
+              style="display:none; margin-top:12px;"
+            ></p>
+          </form>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> JL Studio</p>
+    </footer>
+  </div>
+
+  <script>
+    const year = document.getElementById("year");
+    if (year) year.textContent = new Date().getFullYear();
+
+    const contactForm = document.getElementById("contactForm");
+    const formStatus = document.getElementById("formStatus");
+    const contactSubmit = document.getElementById("contactSubmit");
+
+    if (contactForm && formStatus && contactSubmit) {
+      contactForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        formStatus.style.display = "none";
+        formStatus.textContent = "";
+        formStatus.style.color = "";
+        formStatus.style.opacity = "1";
+
+        contactSubmit.disabled = true;
+        contactSubmit.textContent = "Enviando...";
+
+        try {
+          const formData = new FormData(contactForm);
+
+          const response = await fetch(contactForm.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "application/json"
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error("No se pudo enviar el formulario.");
+          }
+
+          formStatus.textContent = "Consulta enviada correctamente. Te responderé lo antes posible.";
+          formStatus.style.display = "block";
+          formStatus.style.color = "#7ee081";
+
+          contactForm.reset();
+        } catch (error) {
+          formStatus.textContent = "No se pudo enviar la consulta. Inténtalo de nuevo en unos minutos.";
+          formStatus.style.display = "block";
+          formStatus.style.color = "#ff8a8a";
+        } finally {
+          contactSubmit.disabled = false;
+          contactSubmit.textContent = "Enviar consulta";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería | JL Studio</title>
+  <meta
+    name="description"
+    content="Galería de trabajos de pintura de miniaturas y figuras. Encargos disponibles."
+  >
+  <link rel="stylesheet" href="styles.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+</head>
+
+<body>
+  <div class="side-banner side-banner-left" aria-hidden="true"></div>
+  <div class="side-banner side-banner-right" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" href="index.html" aria-label="JL Studio">
+          <img
+            src="images/marcaaguamejorada.png"
+            alt="JL Studio"
+            class="brand__logo"
+          >
+        </a>
+
+        <nav class="nav" aria-label="Navegación principal">
+          <a class="nav__link" href="contacto.html">Contacto</a>
+
+          <a
+            class="nav__icon"
+            href="https://www.instagram.com/jesus.luquelopez.9/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <img src="images/instagram-icon.png" alt="Instagram">
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1 class="page-title">Galería</h1>
+
+      <p class="page-subtitle">
+        Haz click en una miniatura para verla en grande
+      </p>
+
+      <section
+        class="gallery gallery--masonry"
+        id="gallery"
+        aria-label="Galería de miniaturas"
+      >
+        <p class="page-subtitle" id="galleryStatus">Cargando galería...</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> JL Studio. Todos los derechos reservados.</p>
+    </footer>
+
+  </div>
+
+  <div
+    class="lightbox"
+    id="lightbox"
+    aria-hidden="true"
+    role="dialog"
+    aria-label="Visor de imagen"
+  >
+    <div class="lightbox__backdrop"></div>
+
+    <div class="lightbox__content">
+      <button
+        class="lightbox__close"
+        type="button"
+        data-close
+        aria-label="Cerrar imagen"
+      >
+        <img src="images/cerrar-x.png" alt="">
+      </button>
+
+      <button
+        class="lightbox__nav lightbox__nav--prev"
+        type="button"
+        data-prev
+        aria-label="Imagen anterior"
+      >
+        <img src="images/flechaizquierda.png" alt="">
+      </button>
+
+      <div class="lightbox__stage" id="lightboxStage">
+        <img id="lightboxImg" src="" alt="">
+      </div>
+
+      <button
+        class="lightbox__nav lightbox__nav--next"
+        type="button"
+        data-next
+        aria-label="Imagen siguiente"
+      >
+        <img src="images/flechaderecha.png" alt="">
+      </button>
+
+      <div class="lightbox__counter" id="lightboxCounter">1 / 1</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+
+  <script>
+    const year = document.getElementById("year");
+    if (year) {
+      year.textContent = new Date().getFullYear();
+    }
+  </script>
+
+</body>
+</html>
