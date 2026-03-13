@@ -333,12 +333,8 @@
   // ACCESO ADMIN: ALT + 5 CLICS EN EL LOGO
   // =========================
   const logoAdminTrigger =
-    document.querySelector(".site-brand img") ||
-    document.querySelector(".site-brand") ||
     document.querySelector(".brand img") ||
     document.querySelector(".brand") ||
-    document.querySelector(".header__logo img") ||
-    document.querySelector(".header__logo") ||
     document.querySelector("header img");
 
   let adminClickCount = 0;
@@ -355,13 +351,11 @@
   }
 
   function getAdminUrl() {
-    const pathParts = window.location.pathname.split("/").filter(Boolean);
-    const repoName = pathParts.length > 0 ? pathParts[0] : "";
-    const isGitHubPages =
-      window.location.hostname.endsWith("github.io") && repoName;
+    const cleanPath = window.location.pathname
+      .replace(/\/index\.html?$/i, "")
+      .replace(/\/$/, "");
 
-    const basePath = isGitHubPages ? `/${repoName}` : "";
-    return `${window.location.origin}${basePath}/admin/admin.html`;
+    return `${window.location.origin}${cleanPath}/admin/admin.html`;
   }
 
   if (logoAdminTrigger) {
@@ -376,9 +370,7 @@
       e.preventDefault();
       adminClickCount += 1;
 
-      if (adminClickTimer) {
-        clearTimeout(adminClickTimer);
-      }
+      clearTimeout(adminClickTimer);
 
       adminClickTimer = setTimeout(() => {
         resetAdminClicks();
