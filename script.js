@@ -329,18 +329,16 @@
     resetZoom();
   });
 
-    // =========================
-  // ACCESO ADMIN: ALT + 5 CLICS EN EL LOGO
+  // =========================
+  // ACCESO ADMIN: SHIFT + 5 CLICS EN EL LOGO
   // =========================
   const logoAdminTrigger = document.querySelector(".brand");
-  const ADMIN_URL = "https://andsaru.github.io/jlstudio/admin/admin.html";
 
   let adminClickCount = 0;
   let adminClickTimer = null;
-  let altPressed = false;
-
   const REQUIRED_CLICKS = 5;
   const CLICK_TIMEOUT = 2500;
+  const ADMIN_URL = "https://andsaru.github.io/jlstudio/admin/admin.html";
 
   function resetAdminClicks() {
     adminClickCount = 0;
@@ -351,29 +349,11 @@
     }
   }
 
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Alt") {
-      altPressed = true;
-    }
-  });
-
-  window.addEventListener("keyup", (e) => {
-    if (e.key === "Alt") {
-      altPressed = false;
-      resetAdminClicks();
-    }
-  });
-
-  window.addEventListener("blur", () => {
-    altPressed = false;
-    resetAdminClicks();
-  });
-
   if (logoAdminTrigger) {
     logoAdminTrigger.style.cursor = "pointer";
 
     logoAdminTrigger.addEventListener("click", (e) => {
-      if (!altPressed) {
+      if (!e.shiftKey) {
         resetAdminClicks();
         return;
       }
@@ -397,5 +377,6 @@
       }
     });
   }
+  
   loadGallery();
 })();
