@@ -329,48 +329,63 @@
     resetZoom();
   });
 
-  // =========================
+    // =========================
   // ACCESO ADMIN: ALT + 5 CLICS EN EL LOGO
   // =========================
-  const logoAdminTrigger =
-    document.querySelector(".brand img") ||
-    document.querySelector(".brand") ||
-    document.querySelector("header img");
+  const logoAdminTrigger = document.querySelector(".brand");
+  const ADMIN_URL = "https://andsaru.github.io/jlstudio/admin/admin.html";
 
   let adminClickCount = 0;
   let adminClickTimer = null;
+  let altPressed = false;
+
   const REQUIRED_CLICKS = 5;
   const CLICK_TIMEOUT = 2500;
 
   function resetAdminClicks() {
     adminClickCount = 0;
+
     if (adminClickTimer) {
       clearTimeout(adminClickTimer);
       adminClickTimer = null;
     }
   }
 
-  function getAdminUrl() {
-    const cleanPath = window.location.pathname
-      .replace(/\/index\.html?$/i, "")
-      .replace(/\/$/, "");
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Alt") {
+      altPressed = true;
+    }
+  });
 
-    return `${window.location.origin}${cleanPath}/admin/admin.html`;
-  }
+  window.addEventListener("keyup", (e) => {
+    if (e.key === "Alt") {
+      altPressed = false;
+      resetAdminClicks();
+    }
+  });
+
+  window.addEventListener("blur", () => {
+    altPressed = false;
+    resetAdminClicks();
+  });
 
   if (logoAdminTrigger) {
     logoAdminTrigger.style.cursor = "pointer";
 
     logoAdminTrigger.addEventListener("click", (e) => {
-      if (!e.altKey) {
+      if (!altPressed) {
         resetAdminClicks();
         return;
       }
 
       e.preventDefault();
+      e.stopPropagation();
+
       adminClickCount += 1;
 
-      clearTimeout(adminClickTimer);
+      if (adminClickTimer) {
+        clearTimeout(adminClickTimer);
+      }
 
       adminClickTimer = setTimeout(() => {
         resetAdminClicks();
@@ -378,10 +393,9 @@
 
       if (adminClickCount >= REQUIRED_CLICKS) {
         resetAdminClicks();
-        window.location.href = getAdminUrl();
+        window.location.href = ADMIN_URL;
       }
     });
   }
-
   loadGallery();
 })();
