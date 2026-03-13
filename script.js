@@ -354,6 +354,16 @@
     }
   }
 
+  function getAdminUrl() {
+    const pathParts = window.location.pathname.split("/").filter(Boolean);
+    const repoName = pathParts.length > 0 ? pathParts[0] : "";
+    const isGitHubPages =
+      window.location.hostname.endsWith("github.io") && repoName;
+
+    const basePath = isGitHubPages ? `/${repoName}` : "";
+    return `${window.location.origin}${basePath}/admin/admin.html`;
+  }
+
   if (logoAdminTrigger) {
     logoAdminTrigger.style.cursor = "pointer";
 
@@ -363,6 +373,7 @@
         return;
       }
 
+      e.preventDefault();
       adminClickCount += 1;
 
       if (adminClickTimer) {
@@ -375,7 +386,7 @@
 
       if (adminClickCount >= REQUIRED_CLICKS) {
         resetAdminClicks();
-        window.location.href = "admin/admin.html";
+        window.location.href = getAdminUrl();
       }
     });
   }
